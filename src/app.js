@@ -27,11 +27,12 @@ const initPlayers = (players) => {
     // Create players using for loop
     // Type your code here
     for (var i=0; i<PLAYERS.length; i++) {
+        const hero_or_villain = i%2 ===0 ? "hero" : "villain"
         const players = {
             name: PLAYERS[i],
             strength: getRandomStrength(),
             image: `images/super-${i+1}.png`,
-            type: getRandomType(),
+            type: hero_or_villain,
         }
         detailedPlayers.push(players)
     }
@@ -47,12 +48,6 @@ const getRandomStrength = () => {
     return Math.ceil(Math.random()*100)
 }
 
-var type = ["hero", "villain"]
-function getRandomType() {
-    var ran = Math.floor(Math.random() * type.length);
-    return type[ran];
-}
-
 
 const buildPlayers = (players, type) => {
     let fragment = '';
@@ -60,29 +55,15 @@ const buildPlayers = (players, type) => {
     // Loop through players and accumulate HTML template
     // depending of type of player(hero|villain)
     // Type your code here
-    if (type == "hero") {
         for (var i=0; i<players.length; i++) {
-            if (players[i].type == "hero") {
-                fragment = fragment + `<div class="player">
+            if (players[i].type === type) {
+                fragment += `<div class="player">
                 <img src="${players[i].image}">
                 <div class="name">${players[i].name}</div>
                 <div class="strength">${players[i].strength}</div>
              </div>`
             }
         }
-    }
-
-    else if (type == "villain") {
-        for (var i=0; i<players.length; i++) {
-            if (players[i].type == "villain") {
-                fragment = fragment + `<div class="player">
-                <img src="${players[i].image}">
-                <div class="name">${players[i].name}</div>
-                <div class="strength">${players[i].strength}</div>
-             </div>`
-            }
-        }
-    }
 
     return fragment;
 }
